@@ -1,0 +1,88 @@
+{
+  "alertSystem": {
+    "version": "1.0.0",
+    "description": "Example alert configuration for enterprise environment",
+    "channels": {
+      "email": {
+        "enabled": true,
+        "server": "smtp.company.com",
+        "port": 587,
+        "useSSL": true,
+        "from": "logofail-alerts@company.com",
+        "to": [
+          "soc@company.com",
+          "security-team@company.com"
+        ],
+        "username": "logofail-service",
+        "testMode": false
+      },
+      "windowsNotification": {
+        "enabled": true,
+        "showForAllSeverities": false,
+        "minimumSeverity": "High"
+      },
+      "eventLog": {
+        "enabled": true,
+        "logName": "Application",
+        "sourceName": "LogoFAILDefense"
+      },
+      "fileLog": {
+        "enabled": true,
+        "logPath": "C:\\ProgramData\\WindowsDefenseLogoFAIL\\Alerts",
+        "maxFileSize": "10MB",
+        "maxFiles": 30
+      }
+    },
+    "alertRules": {
+      "criticalFileChanges": {
+        "enabled": true,
+        "severity": "Critical",
+        "channels": ["email", "windowsNotification", "eventLog", "fileLog"],
+        "description": "Critical system files have been modified"
+      },
+      "suspiciousProcesses": {
+        "enabled": true,
+        "severity": "High",
+        "channels": ["email", "windowsNotification", "eventLog", "fileLog"],
+        "description": "Suspicious processes detected"
+      },
+      "registryChanges": {
+        "enabled": true,
+        "severity": "Medium",
+        "channels": ["windowsNotification", "eventLog", "fileLog"],
+        "description": "Security-related registry changes detected"
+      },
+      "networkAnomalies": {
+        "enabled": true,
+        "severity": "Medium",
+        "channels": ["eventLog", "fileLog"],
+        "description": "Suspicious network activity detected"
+      },
+      "systemIntegrityIssues": {
+        "enabled": true,
+        "severity": "High",
+        "channels": ["email", "windowsNotification", "eventLog", "fileLog"],
+        "description": "System integrity violations detected"
+      }
+    },
+    "thresholds": {
+      "criticalAlertsPerHour": 0,
+      "highAlertsPerHour": 3,
+      "mediumAlertsPerHour": 10,
+      "alertCorrelationWindow": 300
+    },
+    "schedule": {
+      "dailySummary": {
+        "enabled": true,
+        "time": "08:00",
+        "recipients": ["management@company.com"]
+      },
+      "weeklySummary": {
+        "enabled": true,
+        "day": "Monday",
+        "time": "09:00",
+        "recipients": ["security-team@company.com"]
+      }
+    }
+  }
+}

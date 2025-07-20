@@ -1,0 +1,235 @@
+{
+  "reportMetadata": {
+    "generatedBy": "LogoFAIL Forensic Analysis v1.0.0",
+    "generatedAt": "2024-01-20 15:30:45",
+    "computerName": "WORKSTATION-001",
+    "username": "SYSTEM",
+    "analysisDuration": 127.8,
+    "threatLevel": "SUSPEITO"
+  },
+  "systemInfo": {
+    "operatingSystem": {
+      "caption": "Microsoft Windows 11 Enterprise",
+      "version": "10.0.22631",
+      "buildNumber": "22631",
+      "installDate": "2023-11-15T10:30:00Z",
+      "lastBootUpTime": "2024-01-20T08:15:22Z",
+      "architecture": "64-bit"
+    },
+    "computer": {
+      "name": "WORKSTATION-001",
+      "domain": "CORPORATE.LOCAL",
+      "manufacturer": "Lenovo",
+      "model": "ThinkPad X1 Carbon Gen 11",
+      "systemType": "x64-based PC",
+      "totalPhysicalMemory": 17179869184
+    },
+    "bios": {
+      "manufacturer": "LENOVO",
+      "version": "N3AET82W (1.57 )",
+      "serialNumber": "R90ABCDE",
+      "releaseDate": "2023-10-15T00:00:00Z",
+      "smbiosVersion": "3.5"
+    },
+    "collectionTime": "2024-01-20 15:30:45"
+  },
+  "firmwareAnalysis": {
+    "secureBootStatus": false,
+    "firmwareType": "UEFI",
+    "bootConfiguration": {
+      "rawOutput": "Windows Boot Manager\\nidentifier              {bootmgr}\\ndevice                  partition=\\Device\\HarddiskVolume1\\npath                    \\EFI\\Microsoft\\Boot\\bootmgfw.efi\\ndescription             Windows Boot Manager",
+      "parsedEntries": []
+    },
+    "uefiVariables": {},
+    "tpmStatus": {
+      "enabled": true,
+      "activated": true,
+      "owned": true,
+      "version": "2.0"
+    },
+    "issues": [
+      "Secure Boot desabilitado - CRÍTICO para proteção LogoFAIL"
+    ]
+  },
+  "processAnalysis": {
+    "suspiciousProcesses": [
+      {
+        "processId": 2468,
+        "name": "LenovoVantageService",
+        "path": "C:\\Program Files (x86)\\Lenovo\\VantageService\\3.13.43.0\\LenovoVantageService.exe",
+        "company": "Lenovo Group Limited",
+        "startTime": "2024-01-20T08:16:33Z",
+        "workingSet": 25165824,
+        "reasons": [
+          "Nome corresponde a padrão suspeito: *lenovo*"
+        ]
+      },
+      {
+        "processId": 3142,
+        "name": "ImControllerService",
+        "path": "C:\\Program Files\\Lenovo\\ImController\\Service\\ImControllerService.exe",
+        "company": "Lenovo Group Limited",
+        "startTime": "2024-01-20T08:16:41Z",
+        "workingSet": 8388608,
+        "reasons": [
+          "Nome corresponde a padrão suspeito: *lenovo*"
+        ]
+      }
+    ],
+    "runningServices": [
+      {
+        "name": "LenovoVantageService",
+        "displayName": "Lenovo Vantage Service",
+        "status": "Running",
+        "startType": "Automatic"
+      },
+      {
+        "name": "ImControllerService",
+        "displayName": "Lenovo Intelligent Management Controller Service",
+        "status": "Running",
+        "startType": "Automatic"
+      }
+    ],
+    "networkConnections": [],
+    "loadedModules": [],
+    "issues": [
+      "Processo suspeito: LenovoVantageService - Nome corresponde a padrão suspeito: *lenovo*",
+      "Processo suspeito: ImControllerService - Nome corresponde a padrão suspeito: *lenovo*",
+      "Serviço Lenovo ativo: LenovoVantageService - pode estar relacionado a LogoFAIL",
+      "Serviço Lenovo ativo: ImControllerService - pode estar relacionado a LogoFAIL"
+    ]
+  },
+  "registryAnalysis": {
+    "suspiciousKeys": [
+      {
+        "path": "HKLM:\\SOFTWARE\\Lenovo",
+        "properties": {
+          "VantageVersion": "10.2312.43.0"
+        },
+        "lastWriteTime": "2024-01-18 14:22:15"
+      }
+    ],
+    "secureBootKeys": {
+      "UEFISecureBootEnabled": 0
+    },
+    "startupPrograms": [
+      {
+        "location": "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+        "name": "LenovoUtility",
+        "command": "C:\\Program Files\\Lenovo\\Lenovo Utility\\Lenovo Utility.exe",
+        "suspicious": true
+      }
+    ],
+    "issues": [
+      "Chave de registro suspeita encontrada: HKLM:\\SOFTWARE\\Lenovo",
+      "Secure Boot desabilitado detectado no registro",
+      "Programa de inicialização suspeito: LenovoUtility -> C:\\Program Files\\Lenovo\\Lenovo Utility\\Lenovo Utility.exe"
+    ]
+  },
+  "fileSystemAnalysis": {
+    "suspiciousFiles": [],
+    "bootFiles": [
+      {
+        "path": "C:\\EFI\\Microsoft\\Boot\\bootmgfw.efi",
+        "size": 1458176,
+        "lastWriteTime": "2023-11-15 10:45:22",
+        "hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+        "signatureStatus": "Valid",
+        "version": "10.0.22631.2428"
+      }
+    ],
+    "systemFiles": [],
+    "issues": []
+  },
+  "networkAnalysis": {
+    "suspiciousConnections": [
+      {
+        "processName": "LenovoVantageService",
+        "processId": 2468,
+        "localAddress": "192.168.1.100",
+        "localPort": 53421,
+        "remoteAddress": "api.lenovo.com",
+        "remotePort": 443,
+        "state": "Established",
+        "reasons": [
+          "Processo Lenovo/Vantage comunicando externamente"
+        ],
+        "detectedAt": "2024-01-20 15:30:45"
+      }
+    ],
+    "issues": [
+      "Conexão suspeita: LenovoVantageService -> api.lenovo.com:443"
+    ]
+  },
+  "eventLogAnalysis": {
+    "suspiciousEvents": [
+      {
+        "logName": "System",
+        "eventId": 6005,
+        "timeCreated": "2024-01-20 08:15:22",
+        "message": "The Event log service was started.",
+        "level": "Information",
+        "source": "EventLog"
+      }
+    ],
+    "issues": []
+  },
+  "integrityAnalysis": {},
+  "lenovoAnalysis": {
+    "enabled": true,
+    "vantageInstalled": true,
+    "vantageVersion": "10.2312.43.0",
+    "vantageServices": [
+      {
+        "name": "LenovoVantageService",
+        "displayName": "Lenovo Vantage Service",
+        "status": "Running",
+        "startType": "Automatic"
+      }
+    ],
+    "vantageProcesses": [
+      {
+        "name": "LenovoVantageService",
+        "id": 2468,
+        "path": "C:\\Program Files (x86)\\Lenovo\\VantageService\\3.13.43.0\\LenovoVantageService.exe",
+        "startTime": "2024-01-20T08:16:33Z"
+      }
+    ],
+    "registryEntries": [
+      {
+        "path": "HKLM:\\SOFTWARE\\Lenovo\\Vantage",
+        "name": "Vantage",
+        "lastWriteTime": "2024-01-18 14:22:15"
+      }
+    ],
+    "vantageFiles": [
+      {
+        "path": "C:\\Program Files (x86)\\Lenovo\\VantageService\\3.13.43.0\\LenovoVantageService.exe",
+        "name": "LenovoVantageService.exe",
+        "size": 156672,
+        "lastWriteTime": "2023-12-15 09:30:22"
+      }
+    ],
+    "issues": [
+      "Lenovo Vantage instalado - pode ser vulnerável a LogoFAIL",
+      "Serviço Lenovo ativo: LenovoVantageService",
+      "Processo Lenovo ativo: LenovoVantageService"
+    ]
+  },
+  "recommendations": [
+    "AÇÃO IMEDIATA REQUERIDA: Desconectar da rede e executar análise detalhada",
+    "Considerar reimagem completa do sistema",
+    "Verificar logs de rede para comunicações suspeitas",
+    "Lenovo Vantage instalado - pode ser vulnerável a LogoFAIL",
+    "Serviço Lenovo ativo: LenovoVantageService - pode estar relacionado a LogoFAIL",
+    "Processo suspeito: LenovoVantageService - Nome corresponde a padrão suspeito: *lenovo*",
+    "Chave de registro suspeita encontrada: HKLM:\\SOFTWARE\\Lenovo",
+    "Secure Boot desabilitado detectado no registro",
+    "Programa de inicialização suspeito: LenovoUtility -> C:\\Program Files\\Lenovo\\Lenovo Utility\\Lenovo Utility.exe",
+    "Conexão suspeita: LenovoVantageService -> api.lenovo.com:443",
+    "Serviço Lenovo ativo: ImControllerService - pode estar relacionado a LogoFAIL",
+    "Processo suspeito: ImControllerService - Nome corresponde a padrão suspeito: *lenovo*",
+    "Secure Boot desabilitado - CRÍTICO para proteção LogoFAIL"
+  ],
+  "evidence": []
+}
